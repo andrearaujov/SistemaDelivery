@@ -5,7 +5,7 @@ from passlib.context import CryptContext
 from app.models.models import Usuario
 from app.schemas.user import UsuarioCreate, UsuarioResponse, UsuarioLogin
 from app.config import SessaoLocal
-from datetime import timedelta, datetime
+from datetime import timedelta, datetime, timezone
 from jose import JWTError, jwt
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -90,3 +90,4 @@ def criar_usuario(user: UsuarioCreate, db: Session = Depends(get_db)):
         tipo=novo_usuario.tipo,
         criado_em=novo_usuario.criado_em
     )
+ 
