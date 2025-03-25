@@ -4,12 +4,13 @@ from sqlalchemy.orm import sessionmaker, Session
 from typing import Generator
 
 
-URL_BANCO_DADOS = "mysql+mysqlconnector://root:Queijominas5*@127.0.0.1/delivery_db"
+URL_BANCO_DADOS = "mysql+mysqlconnector://root:Queijominas5*@127.0.0.1:3306/deliveryy_db"
 
 # Criando a conexão com o banco de dados
 motor = create_engine(
     URL_BANCO_DADOS,
     pool_pre_ping=True,
+    echo= True
 )
 
 SessaoLocal = sessionmaker(autocommit=False, autoflush=False, bind=motor)
