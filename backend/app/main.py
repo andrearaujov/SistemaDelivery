@@ -12,7 +12,7 @@ app.include_router(users.router)  # Incluindo o router de usuários
 app.include_router(auth.auth_router, prefix="/auth", tags=["auth"])  # Incluindo as rotas de autenticação
 app.include_router(products.router, prefix="/products", tags=["products"])  # Rota de produtos
 app.include_router(orders.router, prefix="/orders", tags=["orders"])  # Rotas de pedidos
-app.include_router(restaurants.router, prefix="restaurants", tags=["restaurants"]) #Rotas dos restaurantes
+app.include_router(restaurants.router) #Rotas dos restaurantes
 @app.get("/")
 def root():
     return {"message": "API do Sistema de Delivery está rodando!"}

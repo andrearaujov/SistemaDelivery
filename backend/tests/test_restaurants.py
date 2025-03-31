@@ -62,7 +62,7 @@ def test_restaurant(db_session, test_user):
 def test_create_restaurant(client, test_user):
     restaurant_data = {
         "nome": "Novo Restaurante",
-        "cnpj": "11122233344455",
+        "cnpj": "763876382",
         "endereco": "Rua Nova, 789",
         "telefone": "123123123",
         "dono_id": test_user.id

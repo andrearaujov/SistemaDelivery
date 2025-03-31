@@ -5,7 +5,7 @@ from app.schemas.restaurant import RestaurantCreate, RestaurantResponse, Restaur
 from app.config import get_db
 
 #Criar resutarante
-router = APIRouter(prefix="restaurants", tags =["restaurants"])
+router = APIRouter(prefix="/restaurants", tags =["restaurants"])
 
 @router.post("/", response_model=RestaurantResponse, status_code=status.HTTP_201_CREATED)
 def create_restaurant(restaurant: RestaurantCreate, db: Session = Depends(get_db)):
@@ -32,18 +32,17 @@ def get_restaurants(db:Session = Depends(get_db)):
     restaurants = db.query(Restaurante).all()
     return restaurants
 
-@router.get("/{restaurante_id}", response_model = RestaurantResponse)
+@router.get("/{restaurant_id}", response_model = RestaurantResponse)
 def get_restaurant(restaurant_id: int , db:Session = Depends(get_db)):
     restaurant = db.query(Restaurante).filter(Restaurante.id == restaurant_id).first()
     if not restaurant:
         raise HTTPException(status_code=404, detail="Restaurante não encontrado")
-
     return restaurant
 
 
-@router.put("/restaurante_id", response_model=RestaurantResponse)
+@router.put("/{restaurant_id}", response_model=RestaurantResponse)
 def update_restaurant(restaurant_id: int, restaurant_update: RestaurantUpdate, db:Session = Depends(get_db)):
-    restaurant = db.query(Restaurante).filter(Restaurante.id == restaurant_id)
+    restaurant = db.query(Restaurante).filter(Restaurante.id == restaurant_id).first()
     if not restaurant:
         raise HTTPException(status_code=404, detail="Esse restaurante não foi encontrado")
     
@@ -56,8 +55,17 @@ def update_restaurant(restaurant_id: int, restaurant_update: RestaurantUpdate, d
     if restaurant_update.telefone is not None:
         restaurant.telefone = restaurant_update.telefone
         
-        db.commit()
-        db.refresh(restaurant)
+    db.commit()
+    db.refresh(restaurant)
         
-    return 
+    return restaurant
+
+@router.delete("/{restaurant_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_restaurant(restaurant_id: int, db: Session = Depends(get_db)):
+    restaurant = db.query(Restaurante).filter(Restaurante.id == restaurant_id).first()
+    if not restaurant:
+        raise HTTPException(status_code=404, detail="Restaurante não encontrado")
+    db.delete(restaurant)
+    db.commit()
+    return
     
