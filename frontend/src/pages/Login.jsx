@@ -7,10 +7,11 @@ import LoginForm from '../components/LoginForm';
 const Login = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const handleLoginSubmit = async (email, password) => {
     try {
-      const response = await axios.post('/api/login', { email, password });
+      const response = await axios.post(`${API_URL}/login`, { email, password }); 
       
       localStorage.setItem('token', response.data.token);
       navigate('/profile');  

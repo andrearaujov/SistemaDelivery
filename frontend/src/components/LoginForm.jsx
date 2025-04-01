@@ -1,4 +1,3 @@
-// src/components/LoginForm.js
 import { useState } from 'react';
 
 const LoginForm = ({ onSubmit, errorMessage }) => {
@@ -17,12 +16,14 @@ const LoginForm = ({ onSubmit, errorMessage }) => {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email"
+        required
       />
       <input
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Senha"
+        required
       />
       <button type="submit">Entrar</button>
       {errorMessage && <p>{errorMessage}</p>}
